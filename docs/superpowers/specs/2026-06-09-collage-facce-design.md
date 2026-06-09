@@ -20,15 +20,14 @@ Poster interattivo in p5js che compone volti casuali sovrapponendo parti del cor
 - Nessun pulsante, nessun testo, nessun logo
 - La pagina occupa tutto lo schermo (scalando proporzionalmente)
 
-## Ordine di sovrapposizione (dal basso)
+## Ordine di sovrapposizione (dal basso all'alto)
 1. sfondo
-2. capelli (dietro)
-3. orecchie
-4. occhio-sx
-5. occhio-dx
-6. naso
-7. bocca
-8. capelli (davanti, se necessario — da valutare se serve un doppio layer)
+2. orecchie
+3. occhio-sx
+4. occhio-dx
+5. naso
+6. bocca
+7. capelli
 
 ## Stack tecnico
 - p5.js (CDN)
