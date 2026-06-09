@@ -20,11 +20,21 @@
       width: 736px;
       height: 1104px;
     }
-    #bg-layer img {
+    .bg-glitch {
       width: 100%;
       height: 100%;
-      display: block;
-      animation: colorMorph 3s ease-in-out infinite;
+      position: relative;
+      background: url('assets/sfondo.png') 0 0 / 100% 100% no-repeat;
+      animation: colorMorph 4s ease-in-out infinite;
+    }
+    .bg-glitch::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      background-size: inherit;
+      pointer-events: none;
+      animation: pixelGlitch 2s infinite;
     }
     @keyframes colorMorph {
       0%   { filter: hue-rotate(0deg) saturate(1); }
@@ -32,6 +42,27 @@
       50%  { filter: hue-rotate(180deg) saturate(0.7); }
       75%  { filter: hue-rotate(270deg) saturate(1.6); }
       100% { filter: hue-rotate(360deg) saturate(1); }
+    }
+    @keyframes pixelGlitch {
+      0%, 19%, 22%, 49%, 52%, 79%, 82%, 100% {
+        clip-path: inset(0 0 100% 0);
+        opacity: 0;
+      }
+      20% {
+        clip-path: inset(25% 0 60% 0);
+        opacity: 1;
+        filter: hue-rotate(180deg) brightness(1.5) saturate(2);
+      }
+      50% {
+        clip-path: inset(55% 0 30% 0);
+        opacity: 1;
+        filter: invert(1) hue-rotate(90deg);
+      }
+      80% {
+        clip-path: inset(10% 0 80% 0);
+        opacity: 1;
+        filter: brightness(0.5) saturate(3) hue-rotate(270deg);
+      }
     }
     canvas {
       display: block;
@@ -43,7 +74,7 @@
   </style>
 </head>
 <body>
-<div id="bg-layer"><img src="assets/sfondo.png"></div>
+<div id="bg-layer"><div class="bg-glitch"></div></div>
 <script>
 let occhiSx = [], occhiDx = [], nasi = [], bocche = [], capelli = [], orecchie = [];
 
@@ -99,9 +130,9 @@ function randomFace() {
 function drawFace() {
   image(capelli[current.capelli], 0, 0);
   image(orecchie[current.orecchie], 0, 0);
+  image(nasi[current.naso], 0, 0);
   image(occhiSx[current.occhioSx], 0, 0);
   image(occhiDx[current.occhioDx], 0, 0);
-  image(nasi[current.naso], 0, 0);
   image(bocche[current.bocca], 0, 0);
 }
 </script>
