@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collage Facce</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.0/p5.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+    }
+    canvas {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+<script>
+let sfondo;
+let occhiSx = [], occhiDx = [], nasi = [], bocche = [], capelli = [], orecchie = [];
+
+function preload() {
+  sfondo = loadImage('assets/sfondo.png');
+  for (let i = 1; i <= 5; i++) {
+    occhiSx.push(loadImage(`assets/occhio-sx${i}.png`));
+    occhiDx.push(loadImage(`assets/occhio-dx${i}.png`));
+    nasi.push(loadImage(`assets/naso${i}.png`));
+    bocche.push(loadImage(`assets/bocca${i}.png`));
+    capelli.push(loadImage(`assets/capelli${i}.png`));
+    orecchie.push(loadImage(`assets/orecchie${i}.png`));
+  }
+}
+
+let lastChange = 0;
+const INTERVAL = 3000;
+
+let current = { occhioSx: 0, occhioDx: 0, naso: 0, bocca: 0, capelli: 0, orecchie: 0 };
+
+function setup() {
+  createCanvas(736, 1104);
+  randomFace();
+  lastChange = millis();
+}
+
+function draw() {
+  if (millis() - lastChange > INTERVAL) {
+    randomFace();
+    lastChange = millis();
+  }
+  drawFace();
+}
+
+function randomFace() {
+  current.occhioSx = floor(random(occhiSx.length));
+  current.occhioDx = floor(random(occhiDx.length));
+  current.naso = floor(random(nasi.length));
+  current.bocca = floor(random(bocche.length));
+  current.capelli = floor(random(capelli.length));
+  current.orecchie = floor(random(orecchie.length));
+}
+
+function drawFace() {
+  image(sfondo, 0, 0);
+  image(orecchie[current.orecchie], 0, 0);
+  image(occhiSx[current.occhioSx], 0, 0);
+  image(occhiDx[current.occhioDx], 0, 0);
+  image(nasi[current.naso], 0, 0);
+  image(bocche[current.bocca], 0, 0);
+  image(capelli[current.capelli], 0, 0);
+}
+</script>
+</body>
+</html>
