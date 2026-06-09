@@ -12,9 +12,30 @@
       overflow: hidden;
       background: #000;
     }
+    #bg-layer {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 736px;
+      height: 1104px;
+    }
+    #bg-layer img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      animation: colorMorph 3s ease-in-out infinite;
+    }
+    @keyframes colorMorph {
+      0%   { filter: hue-rotate(0deg) saturate(1); }
+      25%  { filter: hue-rotate(90deg) saturate(1.6); }
+      50%  { filter: hue-rotate(180deg) saturate(0.7); }
+      75%  { filter: hue-rotate(270deg) saturate(1.6); }
+      100% { filter: hue-rotate(360deg) saturate(1); }
+    }
     canvas {
       display: block;
-      position: absolute;
+      position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -22,12 +43,11 @@
   </style>
 </head>
 <body>
+<div id="bg-layer"><img src="assets/sfondo.png"></div>
 <script>
-let sfondo;
 let occhiSx = [], occhiDx = [], nasi = [], bocche = [], capelli = [], orecchie = [];
 
 function preload() {
-  sfondo = loadImage('assets/sfondo.png');
   for (let i = 1; i <= 5; i++) {
     occhiSx.push(loadImage(`assets/occhio-sx${i}.png`));
     occhiDx.push(loadImage(`assets/occhio-dx${i}.png`));
@@ -44,17 +64,21 @@ const INTERVAL = 500;
 let current = { occhioSx: 0, occhioDx: 0, naso: 0, bocca: 0, capelli: 0, orecchie: 0 };
 
 function setup() {
-  createCanvas(736, 1104);
+  let c = createCanvas(736, 1104);
+  c.elt.style.background = 'transparent';
+  clear();
   randomFace();
   lastChange = millis();
 }
 
 function draw() {
+  clear();
+  drawFace();
+
   if (millis() - lastChange > INTERVAL) {
     randomFace();
     lastChange = millis();
   }
-  drawFace();
 }
 
 function randomIndex(prev, max) {
@@ -73,7 +97,6 @@ function randomFace() {
 }
 
 function drawFace() {
-  image(sfondo, 0, 0);
   image(capelli[current.capelli], 0, 0);
   image(orecchie[current.orecchie], 0, 0);
   image(occhiSx[current.occhioSx], 0, 0);
