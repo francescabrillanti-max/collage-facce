@@ -57,13 +57,19 @@ function draw() {
   drawFace();
 }
 
+function randomIndex(prev, max) {
+  let next;
+  do { next = floor(random(max)); } while (next === prev);
+  return next;
+}
+
 function randomFace() {
-  current.occhioSx = floor(random(occhiSx.length));
-  current.occhioDx = floor(random(occhiDx.length));
-  current.naso = floor(random(nasi.length));
-  current.bocca = floor(random(bocche.length));
-  current.capelli = floor(random(capelli.length));
-  current.orecchie = floor(random(orecchie.length));
+  current.occhioSx = randomIndex(current.occhioSx, occhiSx.length);
+  current.occhioDx = randomIndex(current.occhioDx, occhiDx.length);
+  current.naso = randomIndex(current.naso, nasi.length);
+  current.bocca = randomIndex(current.bocca, bocche.length);
+  current.capelli = randomIndex(current.capelli, capelli.length);
+  current.orecchie = randomIndex(current.orecchie, orecchie.length);
 }
 
 function drawFace() {
